@@ -1,0 +1,4 @@
+sudo apt-get install device-tree-compiler
+sudo ln -s  /usr/bin/python2 /usr/bin/python
+sudo apt-get install bison flex
+sudo apt install libssl-dev
