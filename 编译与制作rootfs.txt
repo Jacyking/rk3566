@@ -1,0 +1,27 @@
+一：编译选择：
+在SDK根目录执行./build.sh SB03568-1809RK-ubuntu.mk  (SDK已经配置，可以忽略该步骤)
+
+二：编译：
+在SDK根目录执行./build.sh  
+
+
+三：制作rootfs
+操作步骤:
+
+在 PC 机中同步开发板的文件系统，请先将主板和 PC 机置于同一局域网内。
+
+在PC上操作：
+	  mkdir rootfs
+    sudo rsync -avx root@192.168.1.113:/ ./rootfs      //根据主板IP修改
+
+    dd if=/dev/zero of=linuxroot1.img bs=1M count=6800    //2800MB，根据主板rootfs大小修改，一般设置大一点
+    mkfs.ext4 linuxroot1.img
+    mkdir temp1 && sudo mount linuxroot1.img ./temp1
+    sudo cp -rfp rootfs/*  temp1/
+    sudo umount temp1/
+    e2fsck -p -f linuxroot1.img
+    resize2fs  -M linuxroot1.img
+    
+最终linuxroot.img 就是做好的根文件系统镜像，和主板的文件系统是一致的，把linuxroot.img替换SDK下
+ubuntu_rootfs/arm64/rk356x_ubuntu18.04_rootfs.img
+
