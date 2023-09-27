@@ -25,8 +25,7 @@ do_mount()
         # Already in use, make a unique one
         LABEL+="-${DEVBASE}"
     fi
-    #MOUNT_POINT="/media/${LABEL}"
-    MOUNT_POINT="/media/"
+    MOUNT_POINT="/media/${LABEL}"
 
     /bin/mkdir -p ${MOUNT_POINT}
 
