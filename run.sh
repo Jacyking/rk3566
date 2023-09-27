@@ -18,6 +18,11 @@ if [ 1 -eq $running ]; then
         return
 fi
 
+bright=/sys/class/backlight/backlight4/brightness
+if [ ! -O $bright ]; then
+        sudo chown ${USER} $bright
+fi
+
 if [ ! -x "$dirname/$appname" ]; then
         chmod +x $dirname/$appname
 fi
