@@ -1,0 +1,8 @@
+[Unit]
+Description=Mount USB Drive on %i
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/etc/udev/rules.d/usbmount.sh add %i
+ExecStop=/etc/udev/rules.d/usbmount.sh remove %i
