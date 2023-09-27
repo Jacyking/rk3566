@@ -4,7 +4,7 @@ appname2=app2
 dirname=`dirname $0`
 
 if [ -f "$dirname/$appname2" ]; then
-        mv $dirname/$appname2 $dirname/$appname
+        sudo mv $dirname/$appname2 $dirname/$appname
         killall -9 $appname
 fi
 
@@ -24,7 +24,7 @@ if [ ! -O $bright ]; then
 fi
 
 if [ ! -x "$dirname/$appname" ]; then
-        chmod +x $dirname/$appname
+        sudo chmod +x $dirname/$appname
 fi
 
 ulimit -c unlimited
