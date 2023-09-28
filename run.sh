@@ -13,6 +13,16 @@ if [ 0 -eq $running ]; then
         sudo nohup $dirname/s7server /dev/ttyS9 > $dirname/output.log 2>&1 &
 fi
 
+running=`ps -elf | grep -w xcompmgr | grep -v grep | wc -l`
+if [ 0 -eq $running ]; then
+	xcompmgr &
+fi
+
+running=`ps -elf | grep -w openbox | grep -v grep | wc -l`
+if [ 0 -eq $running ]; then
+        openbox &
+fi
+
 running=`ps -elf | grep -w $appname | grep -v grep | wc -l`
 if [ 1 -eq $running ]; then
         return
@@ -27,12 +37,10 @@ if [ ! -x "$dirname/$appname" ]; then
         sudo chmod +x $dirname/$appname
 fi
 
-ulimit -c unlimited
+if [ `ulimit -c` != 'unlimited' ]; then
+        ulimit -c unlimited
+fi
 
 cd $dirname
-
-xcompmgr &
-
-openbox &
 
 QT_IM_MODULE=tgtsml ./$appname "$@"
