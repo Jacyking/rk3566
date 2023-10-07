@@ -43,4 +43,4 @@ fi
 
 cd $dirname
 
-QT_IM_MODULE=tgtsml ./$appname "$@"
+sudo QT_IM_MODULE=tgtsml ./$appname "$@"
