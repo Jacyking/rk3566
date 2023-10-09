@@ -21,7 +21,7 @@ fi
 
 running=`ps -elf | grep -w openbox | grep -v grep | wc -l`
 if [ 0 -eq $running ]; then
-        openbox -nocursor &
+        openbox &
 fi
 
 running=`ps -elf | grep -w $appname | grep -v grep | wc -l`
