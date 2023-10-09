@@ -15,12 +15,13 @@ fi
 
 running=`ps -elf | grep -w xcompmgr | grep -v grep | wc -l`
 if [ 0 -eq $running ]; then
+	hsetroot -solid "#000000"
 	xcompmgr &
 fi
 
 running=`ps -elf | grep -w openbox | grep -v grep | wc -l`
 if [ 0 -eq $running ]; then
-        openbox &
+        openbox -nocursor &
 fi
 
 running=`ps -elf | grep -w $appname | grep -v grep | wc -l`
