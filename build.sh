@@ -6,3 +6,4 @@ sudo cp -rfp rootfs/*  temp1/
 sudo umount temp1/
 e2fsck -p -f linuxroot1.img
 resize2fs  -M linuxroot1.img
+rm temp1 -r
