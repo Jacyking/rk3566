@@ -1,6 +1,6 @@
 [Unit]
 Description=s7server
-After=network.target syslog.target
+After=network.target
 Wants=network.target
 
 [Service]
