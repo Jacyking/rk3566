@@ -8,24 +8,16 @@ if [ -f "$dirname/$appname2" ]; then
         killall -9 $appname
 fi
 
-running=`ps -elf | grep -w s7server | grep -v grep | wc -l`
-if [ 0 -eq $running ]; then
-        sudo nohup $dirname/s7server /dev/ttyS9 > $dirname/output.log 2>&1 &
+if [ 0 -eq `ps -elf | grep -w xcompmgr | grep -v grep | wc -l` ]; then
+        hsetroot -solid "#000000"
+        xcompmgr &
 fi
 
-running=`ps -elf | grep -w xcompmgr | grep -v grep | wc -l`
-if [ 0 -eq $running ]; then
-	hsetroot -solid "#000000"
-	xcompmgr &
-fi
-
-running=`ps -elf | grep -w openbox | grep -v grep | wc -l`
-if [ 0 -eq $running ]; then
+if [ 0 -eq `ps -elf | grep -w openbox | grep -v grep | wc -l` ]; then
         openbox &
 fi
 
-running=`ps -elf | grep -w $appname | grep -v grep | wc -l`
-if [ 1 -eq $running ]; then
+if [ 1 -eq `ps -elf | grep -w $appname | grep -v grep | wc -l` ]; then
         return
 fi
 
