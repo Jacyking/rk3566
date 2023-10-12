@@ -1,0 +1,12 @@
+[Unit]
+Description=s7server
+After=network.target syslog.target
+Wants=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/miniwave
+ExecStart=/opt/miniwave/server.sh
+
+[Install]
+WantedBy=multi-user.target
