@@ -13,5 +13,6 @@ if [ -O $path ]; then
 	echo '#!/bin/sh' > $path
 	echo xrandr --newmode $result >> $path
 	echo xrandr --addmode $device $info >> $path
-	echo xrandr --output $device --mode $info >> $path
+	echo xrandr --output $device --mode $info >> $path.
+ 	echo xrandr -o left >> $path
 fi
