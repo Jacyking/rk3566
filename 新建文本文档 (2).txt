@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -x
+
+filename=$0
+if [ "`echo $0 | grep "bin"`" != "" ]; then
+    filename=`readlink $0`
+fi
+if [ "`echo $filename | grep "readlink"`" != "" ]; then
+    filename=`ls -l  $0 | awk -F'->' '{print $2}' | tr -d ' '`
+fi
+
+dirname=`dirname $filename`
+if [ "`echo $dirname | grep "com.qianxin.qaxsafe"`" != "" ]; then
+    dirname="/opt/apps/com.qianxin.qaxsafe/files/"
+else
+    dirname="/opt/qaxsafe/"
+fi
+
+app=${dirname}qaxtray_4
+app_5=${dirname}qaxtray_5
+
+isqt5=0
+if [ -f $app_5 ]; then
+    ldd $app_5 2>~/.ldderror.log
+    errorinfo=`cat ~/.ldderror.log`
+    rm ~/.ldderror.log
+    if [[ ${errorinfo}x == ''x ]]; then
+        info=(`ldd $app_5 | grep -i qt5 |  awk -F'=>' '{print $2~/Qt5/}'`)
+        echo ${info[@]}
+        if [[ ${#info[@]} -gt "1" ]] ; then
+            if [[ "${info[@]}" =~ "1" ]]; then
+                isqt5=1
+            fi
+            if [[ "${info[@]}" =~ "0" ]]; then
+                isqt5=0
+            fi
+        fi
+    fi
+fi
+
+if [ "$isqt5" = "1" ]; then
+    app=$app_5
+fi
+log=/dev/null
+
+nohup $app $@ > $log 2>&1 & 
+
+
+if [ "$isqt5" = "1" ]; then
+    sleep 0.5
+    trayid=`ps -ef | grep qaxtray_5 | grep -v grep`
+    ret=$?
+    if [ $ret -eq 0 ]; then
+        ok=1
+    else
+        nohup ${dirname}qaxtray_4 $@ > $log 2>&1 & 
+    fi
+fi
