@@ -1,15 +1,13 @@
 #!/bin/sh
-dd if=/dev/zero of=linuxroot1.img bs=1M count=6800
-mkfs.ext4 /home/jacyking/rk3566/linuxroot1.img
-mkdir temp1 && sudo mount /home/jacyking/rk3566/linuxroot1.img /home/jacyking/rk3566/temp1
-sudo rm /home/jacyking/rk3566/rootfs-1024x600/opt/tjx/* -r
-sudo cp /home/jacyking/rk3566/miniwave/* /home/jacyking/rk3566/rootfs-1024x600/opt/tjx/ -r
-sudo cp -rfp /home/jacyking/rk3566/rootfs-1024x600/*  /home/jacyking/rk3566/temp1/
-sudo umount /home/jacyking/rk3566/temp1/
-e2fsck -p -f /home/jacyking/rk3566/linuxroot1.img
-resize2fs  -M /home/jacyking/rk3566/linuxroot1.img
-mv /home/jacyking/rk3566/linuxroot1.img /home/jacyking/rk3566/linux4.19-1024x600/rootfs
-rm /home/jacyking/rk3566/temp1 -r
+dirname=`dirname $0`
+dd if=/dev/zero of=$dirname/linuxroot1.img bs=1M count=6800
+mkfs.ext4 $dirname/linuxroot1.img
+mkdir $dirname/temp1 && sudo mount $dirname/linuxroot1.img $dirname/temp1
+sudo cp -rfp $dirname/rootfs/*  $dirname/temp1/
+sudo umount $dirname/temp1/
+e2fsck -p -f $dirname/linuxroot1.img
+resize2fs  -M $dirname/linuxroot1.img
+rm temp1 -r
+mv $dirname/linuxroot1.img $dirname/linux4.19/rootfs
 echo "done"
-cd /home/jacyking/rk3566/linux4.19-1024x600
-./build.sh
+$dirname/linux4.19/build.sh
